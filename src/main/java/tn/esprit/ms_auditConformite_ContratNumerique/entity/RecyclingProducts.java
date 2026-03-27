@@ -17,12 +17,13 @@ public class RecyclingProducts {
 
     private LocalDate transferDate;
 
+    @Column(nullable = true)  // ← accepte null
     private Double weight;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = true)  // ← accepte null
     private Destination destination;
 
-    // Lié à un InspectionCase
     @ManyToOne
     @JoinColumn(name = "case_id")
     private InspectionCase inspectionCase;

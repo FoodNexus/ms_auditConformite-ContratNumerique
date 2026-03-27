@@ -2,6 +2,7 @@ package tn.esprit.ms_auditConformite_ContratNumerique.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tn.esprit.ms_auditConformite_ContratNumerique.entity.InspectionCase;
 import tn.esprit.ms_auditConformite_ContratNumerique.entity.RecyclingProducts;
 import tn.esprit.ms_auditConformite_ContratNumerique.repository.InspectionCaseRepository;
@@ -12,33 +13,37 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional  // ← IMPORTANT
 public class InspectionCaseService {
 
     private final InspectionCaseRepository repo;
     private final RecyclingProductsRepository recyclingProductsRepository;
 
-    // CREATE
     public InspectionCase create(InspectionCase inspectionCase) {
         inspectionCase.setCreationDate(LocalDate.now());
         inspectionCase.setResolutionStatus(
                 InspectionCase.ResolutionStatus.EN_COURS
         );
 
-        // Sauvegarder l'InspectionCase
-        InspectionCase saved = repo.save(inspectionCase);
+        // Sauvegarder d'abord l'InspectionCase
+        InspectionCase saved = repo.saveAndFlush(inspectionCase); // ← saveAndFlush
 
-        // Si verdict = DESTRUCTION_RECYCLAGE → créer automatiquement RecyclingProducts
-        if (saved.getSanitaryVerdict() ==
-                InspectionCase.SanitaryVerdict.DESTRUCTION_RECYCLAGE) {
+        // Si verdict DESTRUCTION_RECYCLAGE → créer RecyclingProducts auto
+        if (InspectionCase.SanitaryVerdict.DESTRUCTION_RECYCLAGE
+                .equals(saved.getSanitaryVerdict())) {
 
-            RecyclingProducts recyclingProduct = RecyclingProducts.builder()
+            RecyclingProducts recycling = RecyclingProducts.builder()
                     .transferDate(LocalDate.now())
                     .inspectionCase(saved)
-                    .weight(null)        // ← sera rempli après
-                    .destination(null)   // ← sera rempli après
+                    .weight(null)
+                    .destination(null)
                     .build();
 
-            recyclingProductsRepository.save(recyclingProduct);
+            RecyclingProducts savedRecycling =
+                    recyclingProductsRepository.saveAndFlush(recycling); // ← saveAndFlush
+
+            System.out.println("✅ RecyclingProducts créé automatiquement ID: "
+                    + savedRecycling.getLogId()); // ← log pour vérifier
         }
 
         return saved;
@@ -103,20 +108,18 @@ public class InspectionCaseService {
         InspectionCase existing = getById(id);
         existing.setSanitaryVerdict(verdict);
 
-        // Si on change le verdict vers DESTRUCTION_RECYCLAGE
-        // et qu'il n'y a pas encore de RecyclingProducts → créer automatiquement
         if (verdict == InspectionCase.SanitaryVerdict.DESTRUCTION_RECYCLAGE) {
             boolean alreadyExists = !recyclingProductsRepository
                     .findByInspectionCase_CaseId(id).isEmpty();
 
             if (!alreadyExists) {
-                RecyclingProducts recyclingProduct = RecyclingProducts.builder()
+                RecyclingProducts recycling = RecyclingProducts.builder()
                         .transferDate(LocalDate.now())
                         .inspectionCase(existing)
                         .weight(null)
                         .destination(null)
                         .build();
-                recyclingProductsRepository.save(recyclingProduct);
+                recyclingProductsRepository.saveAndFlush(recycling);
             }
         }
 
