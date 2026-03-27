@@ -1,0 +1,12 @@
+package tn.esprit.ms_auditConformite_ContratNumerique.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import tn.esprit.ms_auditConformite_ContratNumerique.entity.RecyclingLog;
+
+import java.util.List;
+
+public interface RecyclingLogRepository
+        extends JpaRepository<RecyclingLog, Long> {
+
+    List<RecyclingLog> findByInspectionCase_CaseId(Long caseId);
+}
