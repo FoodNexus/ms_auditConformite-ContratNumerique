@@ -79,4 +79,14 @@ public class RecyclingProductsService {
         }
         repo.deleteById(id);
     }
+
+    // UPDATE WEIGHT ET DESTINATION SEULEMENT
+    public RecyclingProducts updateDetails(Long id,
+                                           Double weight,
+                                           RecyclingProducts.Destination destination) {
+        RecyclingProducts existing = getById(id);
+        existing.setWeight(weight);
+        existing.setDestination(destination);
+        return repo.save(existing);
+    }
 }
