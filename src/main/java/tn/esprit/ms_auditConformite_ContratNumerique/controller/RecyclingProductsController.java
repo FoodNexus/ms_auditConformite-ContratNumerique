@@ -66,4 +66,14 @@ public class RecyclingProductsController {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PatchMapping("/{id}/details")
+    public ResponseEntity<RecyclingProducts> updateDetails(
+            @PathVariable Long id,
+            @RequestParam Double weight,
+            @RequestParam RecyclingProducts.Destination destination) {
+        return ResponseEntity.ok(
+                service.updateDetails(id, weight, destination)
+        );
+    }
 }
