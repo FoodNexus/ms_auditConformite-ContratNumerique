@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RecyclingLog {
+public class RecyclingProducts {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,10 +17,10 @@ public class RecyclingLog {
 
     private LocalDate transferDate;
 
+    private Double weight;
+
     @Enumerated(EnumType.STRING)
     private Destination destination;
-
-    private Double weight;
 
     // Lié à un InspectionCase
     @ManyToOne
