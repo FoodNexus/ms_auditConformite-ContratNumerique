@@ -11,4 +11,5 @@ public interface DigitalContractRepository
     Optional<DigitalContract> findByDeliveryId(Long deliveryId);
     List<DigitalContract> findByDonorId(Long donorId);
     List<DigitalContract> findByReceiverId(Long receiverId);
+    List<DigitalContract> findByStatus(DigitalContract.ContractStatus status);
 }
