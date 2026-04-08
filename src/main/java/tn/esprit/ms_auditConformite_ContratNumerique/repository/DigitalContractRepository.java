@@ -9,7 +9,7 @@ public interface DigitalContractRepository
         extends JpaRepository<DigitalContract, Long> {
 
     Optional<DigitalContract> findByDeliveryId(Long deliveryId);
-    List<DigitalContract> findByDonorId(Long donorId);
-    List<DigitalContract> findByReceiverId(Long receiverId);
+    List<DigitalContract> findByDonorName(String donorName);
+    List<DigitalContract> findByReceiverName(String receiverName);
     List<DigitalContract> findByStatus(DigitalContract.ContractStatus status);
 }

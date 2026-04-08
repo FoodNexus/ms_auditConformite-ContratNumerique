@@ -29,8 +29,10 @@ public class DigitalContractService {
 
         contract.setGenerationDate(LocalDate.now());
         contract.setStatus(DigitalContract.ContractStatus.GENERE);
+        contract = repo.save(contract);
+        
         contract.setPdfDocumentUrl(
-                "/contracts/contract_" + contract.getDeliveryId() + ".pdf"
+                "/audit/contracts/print/" + contract.getContractId()
         );
 
         return repo.save(contract);
@@ -57,13 +59,13 @@ public class DigitalContractService {
     }
 
     // READ BY DONOR
-    public List<DigitalContract> getByDonor(Long donorId) {
-        return repo.findByDonorId(donorId);
+    public List<DigitalContract> getByDonorName(String donorName) {
+        return repo.findByDonorName(donorName);
     }
 
     // READ BY RECEIVER
-    public List<DigitalContract> getByReceiver(Long receiverId) {
-        return repo.findByReceiverId(receiverId);
+    public List<DigitalContract> getByReceiverName(String receiverName) {
+        return repo.findByReceiverName(receiverName);
     }
 
     // READ BY STATUS
@@ -75,8 +77,8 @@ public class DigitalContractService {
     // UPDATE
     public DigitalContract update(Long id, DigitalContract updated) {
         DigitalContract existing = getById(id);
-        existing.setDonorId(updated.getDonorId());
-        existing.setReceiverId(updated.getReceiverId());
+        existing.setDonorName(updated.getDonorName());
+        existing.setReceiverName(updated.getReceiverName());
         existing.setDeliveryId(updated.getDeliveryId());
         existing.setFiscalDeductionValue(updated.getFiscalDeductionValue());
         existing.setPdfDocumentUrl(updated.getPdfDocumentUrl());

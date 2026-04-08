@@ -7,11 +7,13 @@ import org.springframework.web.bind.annotation.*;
 import tn.esprit.ms_auditConformite_ContratNumerique.entity.InspectionCase;
 import tn.esprit.ms_auditConformite_ContratNumerique.service.InspectionCaseService;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/inspection-cases")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('AUDITOR')")
 public class InspectionCaseController {
 
     private final InspectionCaseService service;

@@ -7,11 +7,13 @@ import org.springframework.web.bind.annotation.*;
 import tn.esprit.ms_auditConformite_ContratNumerique.entity.RecyclingProducts;
 import tn.esprit.ms_auditConformite_ContratNumerique.service.RecyclingProductsService;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/recycling-products")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('AUDITOR')")
 public class RecyclingProductsController {
 
     private final RecyclingProductsService service;
@@ -73,7 +75,6 @@ public class RecyclingProductsController {
             @RequestParam Double weight,
             @RequestParam RecyclingProducts.Destination destination) {
         return ResponseEntity.ok(
-                service.updateDetails(id, weight, destination)
-        );
+                service.updateDetails(id, weight, destination));
     }
 }

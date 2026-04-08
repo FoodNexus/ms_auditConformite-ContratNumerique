@@ -21,14 +21,11 @@ public class DigitalContract {
 
     private Double fiscalDeductionValue;
 
-    // Référence vers la Delivery (dans un autre microservice)
     private Long deliveryId;
 
-    // Référence vers le Donor (dans ms_gestionUser)
-    private Long donorId;
+    private String donorName;
 
-    // Référence vers le Receiver (dans ms_gestionUser)
-    private Long receiverId;
+    private String receiverName;
 
     // Enums
     @Enumerated(EnumType.STRING)

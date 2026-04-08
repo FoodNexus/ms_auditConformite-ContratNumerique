@@ -7,11 +7,13 @@ import org.springframework.web.bind.annotation.*;
 import tn.esprit.ms_auditConformite_ContratNumerique.entity.DigitalContract;
 import tn.esprit.ms_auditConformite_ContratNumerique.service.DigitalContractService;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/contracts")
 @RequiredArgsConstructor
+@PreAuthorize("hasRole('ADMIN')")
 public class DigitalContractController {
 
     private final DigitalContractService service;
@@ -45,15 +47,15 @@ public class DigitalContractController {
     }
 
     // GET - Par Donor
-    @GetMapping("/donor/{donorId}")
-    public List<DigitalContract> getByDonor(@PathVariable Long donorId) {
-        return service.getByDonor(donorId);
+    @GetMapping("/donor/{donorName}")
+    public List<DigitalContract> getByDonor(@PathVariable String donorName) {
+        return service.getByDonorName(donorName);
     }
 
     // GET - Par Receiver
-    @GetMapping("/receiver/{receiverId}")
-    public List<DigitalContract> getByReceiver(@PathVariable Long receiverId) {
-        return service.getByReceiver(receiverId);
+    @GetMapping("/receiver/{receiverName}")
+    public List<DigitalContract> getByReceiver(@PathVariable String receiverName) {
+        return service.getByReceiverName(receiverName);
     }
 
     // GET - Par Status
