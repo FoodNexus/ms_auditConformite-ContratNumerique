@@ -24,13 +24,13 @@ public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationTo
     private Collection<GrantedAuthority> extractResourceRoles(Jwt jwt) {
         Set<String> roles = new HashSet<>();
 
-        // 1. Extraire les realm_access roles
+        // Extraire les realm_access roles
         Map<String, Object> realmAccess = jwt.getClaim("realm_access");
         if (realmAccess != null && realmAccess.get("roles") != null) {
             roles.addAll((List<String>) realmAccess.get("roles"));
         }
 
-        // 2. Extraire les resource_access roles (client roles)
+        // Extraire les resource_access roles (client roles)
         Map<String, Object> resourceAccess = jwt.getClaim("resource_access");
         if (resourceAccess != null) {
             resourceAccess.forEach((client, clientAccess) -> {

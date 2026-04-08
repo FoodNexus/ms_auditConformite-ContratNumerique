@@ -18,7 +18,6 @@ public class InspectionCaseController {
 
     private final InspectionCaseService service;
 
-    // POST - Créer un dossier d'anomalie
     @PostMapping
     public ResponseEntity<InspectionCase> create(
             @RequestBody InspectionCase inspectionCase) {
@@ -27,45 +26,38 @@ public class InspectionCaseController {
                 .body(service.create(inspectionCase));
     }
 
-    // GET - Tous les dossiers
     @GetMapping
     public List<InspectionCase> getAll() {
         return service.getAll();
     }
 
-    // GET - Par ID
     @GetMapping("/{id}")
     public ResponseEntity<InspectionCase> getById(@PathVariable Long id) {
         return ResponseEntity.ok(service.getById(id));
     }
 
-    // GET - Par Auditor
     @GetMapping("/auditor/{auditorId}")
     public List<InspectionCase> getByAuditor(@PathVariable Long auditorId) {
         return service.getByAuditor(auditorId);
     }
 
-    // GET - Par Delivery
     @GetMapping("/delivery/{deliveryId}")
     public List<InspectionCase> getByDelivery(@PathVariable Long deliveryId) {
         return service.getByDelivery(deliveryId);
     }
 
-    // GET - Par Status
     @GetMapping("/status/{status}")
     public List<InspectionCase> getByStatus(
             @PathVariable InspectionCase.ResolutionStatus status) {
         return service.getByStatus(status);
     }
 
-    // GET - Par Verdict
     @GetMapping("/verdict/{verdict}")
     public List<InspectionCase> getByVerdict(
             @PathVariable InspectionCase.SanitaryVerdict verdict) {
         return service.getByVerdict(verdict);
     }
 
-    // PUT - Modifier un dossier
     @PutMapping("/{id}")
     public ResponseEntity<InspectionCase> update(
             @PathVariable Long id,
@@ -89,7 +81,6 @@ public class InspectionCaseController {
         return ResponseEntity.ok(service.updateVerdict(id, verdict));
     }
 
-    // DELETE
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);

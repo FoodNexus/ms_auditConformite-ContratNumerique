@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Transactional  // ← IMPORTANT
+@Transactional
 public class InspectionCaseService {
 
     private final InspectionCaseRepository repo;
@@ -25,10 +25,8 @@ public class InspectionCaseService {
                 InspectionCase.ResolutionStatus.EN_COURS
         );
 
-        // Sauvegarder d'abord l'InspectionCase
         InspectionCase saved = repo.saveAndFlush(inspectionCase); // ← saveAndFlush
 
-        // Si verdict DESTRUCTION_RECYCLAGE → créer RecyclingProducts auto
         if (InspectionCase.SanitaryVerdict.DESTRUCTION_RECYCLAGE
                 .equals(saved.getSanitaryVerdict())) {
 
@@ -42,48 +40,41 @@ public class InspectionCaseService {
             RecyclingProducts savedRecycling =
                     recyclingProductsRepository.saveAndFlush(recycling); // ← saveAndFlush
 
-            System.out.println("✅ RecyclingProducts créé automatiquement ID: "
-                    + savedRecycling.getLogId()); // ← log pour vérifier
+            System.out.println(" RecyclingProducts créé automatiquement ID: "
+                    + savedRecycling.getLogId());
         }
 
         return saved;
     }
 
-    // READ ALL
     public List<InspectionCase> getAll() {
         return repo.findAll();
     }
 
-    // READ BY ID
     public InspectionCase getById(Long id) {
         return repo.findById(id)
                 .orElseThrow(() ->
                         new RuntimeException("InspectionCase non trouvé: " + id));
     }
 
-    // READ BY AUDITOR
     public List<InspectionCase> getByAuditor(Long auditorId) {
         return repo.findByAuditorId(auditorId);
     }
 
-    // READ BY DELIVERY
     public List<InspectionCase> getByDelivery(Long deliveryId) {
         return repo.findByDeliveryId(deliveryId);
     }
 
-    // READ BY STATUS
     public List<InspectionCase> getByStatus(
             InspectionCase.ResolutionStatus status) {
         return repo.findByResolutionStatus(status);
     }
 
-    // READ BY VERDICT
     public List<InspectionCase> getByVerdict(
             InspectionCase.SanitaryVerdict verdict) {
         return repo.findBySanitaryVerdict(verdict);
     }
 
-    // UPDATE
     public InspectionCase update(Long id, InspectionCase updated) {
         InspectionCase existing = getById(id);
         existing.setDescription(updated.getDescription());
@@ -94,7 +85,6 @@ public class InspectionCaseService {
         return repo.save(existing);
     }
 
-    // UPDATE STATUS
     public InspectionCase updateStatus(Long id,
                                        InspectionCase.ResolutionStatus status) {
         InspectionCase existing = getById(id);
@@ -102,7 +92,6 @@ public class InspectionCaseService {
         return repo.save(existing);
     }
 
-    // UPDATE VERDICT
     public InspectionCase updateVerdict(Long id,
                                         InspectionCase.SanitaryVerdict verdict) {
         InspectionCase existing = getById(id);
@@ -126,7 +115,6 @@ public class InspectionCaseService {
         return repo.save(existing);
     }
 
-    // DELETE
     public void delete(Long id) {
         if (!repo.existsById(id)) {
             throw new RuntimeException("InspectionCase non trouvé: " + id);

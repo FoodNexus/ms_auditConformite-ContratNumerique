@@ -26,13 +26,10 @@ public class InspectionCase {
     @Enumerated(EnumType.STRING)
     private SanitaryVerdict sanitaryVerdict;
 
-    // Référence vers la Delivery (dans un autre microservice)
     private Long deliveryId;
 
-    // Référence vers l'Auditor (dans ms_gestionUser)
     private Long auditorId;
 
-    // Enums
     public enum ResolutionStatus {
         EN_COURS,
         RESOLU,

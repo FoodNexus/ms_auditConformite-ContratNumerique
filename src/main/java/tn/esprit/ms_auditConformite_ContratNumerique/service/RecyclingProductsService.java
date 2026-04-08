@@ -17,16 +17,13 @@ public class RecyclingProductsService {
     private final RecyclingProductsRepository repo;
     private final InspectionCaseRepository inspectionCaseRepository;
 
-    // CREATE
     public RecyclingProducts create(Long caseId, RecyclingProducts product) {
 
-        // Vérifier que l'InspectionCase existe
         InspectionCase inspectionCase = inspectionCaseRepository
                 .findById(caseId)
                 .orElseThrow(() ->
                         new RuntimeException("InspectionCase non trouvé: " + caseId));
 
-        // Vérifier que le verdict est bien DESTRUCTION_RECYCLAGE
         if (inspectionCase.getSanitaryVerdict() !=
                 InspectionCase.SanitaryVerdict.DESTRUCTION_RECYCLAGE) {
             throw new RuntimeException(
@@ -40,30 +37,25 @@ public class RecyclingProductsService {
         return repo.save(product);
     }
 
-    // READ ALL
     public List<RecyclingProducts> getAll() {
         return repo.findAll();
     }
 
-    // READ BY ID
     public RecyclingProducts getById(Long id) {
         return repo.findById(id)
                 .orElseThrow(() ->
                         new RuntimeException("RecyclingProducts non trouvé: " + id));
     }
 
-    // READ BY INSPECTION CASE
     public List<RecyclingProducts> getByInspectionCase(Long caseId) {
         return repo.findByInspectionCase_CaseId(caseId);
     }
 
-    // READ BY DESTINATION
     public List<RecyclingProducts> getByDestination(
             RecyclingProducts.Destination destination) {
         return repo.findByDestination(destination);
     }
 
-    // UPDATE
     public RecyclingProducts update(Long id, RecyclingProducts updated) {
         RecyclingProducts existing = getById(id);
         existing.setWeight(updated.getWeight());
@@ -72,7 +64,6 @@ public class RecyclingProductsService {
         return repo.save(existing);
     }
 
-    // DELETE
     public void delete(Long id) {
         if (!repo.existsById(id)) {
             throw new RuntimeException("RecyclingProducts non trouvé: " + id);
@@ -80,7 +71,6 @@ public class RecyclingProductsService {
         repo.deleteById(id);
     }
 
-    // UPDATE WEIGHT ET DESTINATION SEULEMENT
     public RecyclingProducts updateDetails(Long id,
                                            Double weight,
                                            RecyclingProducts.Destination destination) {

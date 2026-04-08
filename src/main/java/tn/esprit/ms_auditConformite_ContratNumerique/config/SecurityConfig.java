@@ -26,7 +26,7 @@ public class SecurityConfig {
                                 .csrf(csrf -> csrf.disable())
                                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                                 .authorizeHttpRequests(auth -> auth
-                                                // Permettre l'accès aux points de terminaison non sécurisés si besoin (ex. swagger)
+
                                                 .requestMatchers("/api/contracts/public/**").permitAll()
                                                 .anyRequest().authenticated())
                                 .oauth2ResourceServer(oauth2 -> oauth2

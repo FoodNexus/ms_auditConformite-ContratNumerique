@@ -16,10 +16,8 @@ public class DigitalContractService {
 
     private final DigitalContractRepository repo;
 
-    // CREATE
     public DigitalContract create(DigitalContract contract) {
 
-        // Vérifier si un contrat existe déjà pour cette livraison
         if (repo.findByDeliveryId(contract.getDeliveryId()).isPresent()) {
             throw new RuntimeException(
                     "Contrat déjà généré pour la livraison: "
@@ -38,19 +36,16 @@ public class DigitalContractService {
         return repo.save(contract);
     }
 
-    // READ ALL
     public List<DigitalContract> getAll() {
         return repo.findAll();
     }
 
-    // READ BY ID
     public DigitalContract getById(Long id) {
         return repo.findById(id)
                 .orElseThrow(() ->
                         new RuntimeException("Contrat non trouvé: " + id));
     }
 
-    // READ BY DELIVERY
     public DigitalContract getByDelivery(Long deliveryId) {
         return repo.findByDeliveryId(deliveryId)
                 .orElseThrow(() ->
@@ -58,23 +53,19 @@ public class DigitalContractService {
                                 "Aucun contrat pour la livraison: " + deliveryId));
     }
 
-    // READ BY DONOR
     public List<DigitalContract> getByDonorName(String donorName) {
         return repo.findByDonorName(donorName);
     }
 
-    // READ BY RECEIVER
     public List<DigitalContract> getByReceiverName(String receiverName) {
         return repo.findByReceiverName(receiverName);
     }
 
-    // READ BY STATUS
     public List<DigitalContract> getByStatus(
             DigitalContract.ContractStatus status) {
         return repo.findByStatus(status);
     }
 
-    // UPDATE
     public DigitalContract update(Long id, DigitalContract updated) {
         DigitalContract existing = getById(id);
         existing.setDonorName(updated.getDonorName());
@@ -86,7 +77,6 @@ public class DigitalContractService {
         return repo.save(existing);
     }
 
-    // UPDATE STATUS SEULEMENT
     public DigitalContract updateStatus(Long id,
                                         DigitalContract.ContractStatus status) {
         DigitalContract existing = getById(id);
@@ -94,7 +84,6 @@ public class DigitalContractService {
         return repo.save(existing);
     }
 
-    // DELETE
     public void delete(Long id) {
         if (!repo.existsById(id)) {
             throw new RuntimeException("Contrat non trouvé: " + id);
