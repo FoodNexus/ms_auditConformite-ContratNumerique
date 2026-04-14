@@ -29,6 +29,7 @@ public class InspectionCase {
     private Long deliveryId;
 
     private Long auditorId;
+   private String imageUrl;
 
     public enum ResolutionStatus {
         EN_COURS,

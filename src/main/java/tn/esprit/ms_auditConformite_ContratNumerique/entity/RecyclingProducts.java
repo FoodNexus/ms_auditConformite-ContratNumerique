@@ -17,11 +17,11 @@ public class RecyclingProducts {
 
     private LocalDate transferDate;
 
-    @Column(nullable = true)  // ← accepte null
+    @Column(nullable = true)
     private Double weight;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = true)  // ← accepte null
+    @Column(nullable = true)
     private Destination destination;
 
     @ManyToOne

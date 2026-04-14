@@ -26,6 +26,17 @@ public class InspectionCaseController {
                 .body(service.create(inspectionCase));
     }
 
+    @PostMapping(value = "/scan", consumes = org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<InspectionCase> scan(
+            @RequestParam("image") org.springframework.web.multipart.MultipartFile image,
+            @RequestParam("auditorId") Long auditorId,
+            @RequestParam("deliveryId") Long deliveryId,
+            @RequestParam(value = "description", required = false) String description) {
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(service.scanAndCreate(image, auditorId, deliveryId, description));
+    }
+
     @GetMapping
     public List<InspectionCase> getAll() {
         return service.getAll();

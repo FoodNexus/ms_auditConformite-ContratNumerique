@@ -18,6 +18,29 @@ public class InspectionCaseService {
 
     private final InspectionCaseRepository repo;
     private final RecyclingProductsRepository recyclingProductsRepository;
+    private final AiInspectionService aiService;
+
+    public InspectionCase scanAndCreate(org.springframework.web.multipart.MultipartFile image, Long auditorId, Long deliveryId, String description) {
+        // 1. Simuler l'analyse AI
+        InspectionCase.SanitaryVerdict verdict = aiService.scanImage(image);
+
+        // 2. Sauvegarder l'image localement (Simplifié)
+        String fileName = System.currentTimeMillis() + "_" + image.getOriginalFilename();
+        // Dans un cas réel, on enregistrerait le fichier sur disque ici.
+        // Pour ce projet, on stocke juste le nom simulé.
+        String imageUrl = "/uploads/" + fileName;
+
+        // 3. Créer l'InspectionCase
+        InspectionCase inspectionCase = InspectionCase.builder()
+                .auditorId(auditorId)
+                .deliveryId(deliveryId)
+                .description(description)
+                .sanitaryVerdict(verdict)
+                .imageUrl(imageUrl)
+                .build();
+
+        return create(inspectionCase);
+    }
 
     public InspectionCase create(InspectionCase inspectionCase) {
         inspectionCase.setCreationDate(LocalDate.now());
