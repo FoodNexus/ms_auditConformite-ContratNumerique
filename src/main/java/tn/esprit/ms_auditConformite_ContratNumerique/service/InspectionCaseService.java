@@ -24,18 +24,12 @@ public class InspectionCaseService {
         // 1. Simuler l'analyse AI
         InspectionCase.SanitaryVerdict verdict = aiService.scanImage(image);
 
-        // 2. Sauvegarder l'image localement (Simplifié)
-        String fileName = System.currentTimeMillis() + "_" + image.getOriginalFilename();
-        // Pour ce projet, on stocke juste le nom simulé.
-        String imageUrl = "/uploads/" + fileName;
-
-        // 3. Créer l'InspectionCase
+        // 2. Créer l'InspectionCase (Sans image)
         InspectionCase inspectionCase = InspectionCase.builder()
                 .auditorId(auditorId)
                 .deliveryId(deliveryId)
                 .description(description)
                 .sanitaryVerdict(verdict)
-                .imageUrl(imageUrl)
                 .build();
 
         return create(inspectionCase);
@@ -45,14 +39,9 @@ public class InspectionCaseService {
         // 1. Simuler l'analyse AI
         InspectionCase.SanitaryVerdict verdict = aiService.scanImage(image);
 
-        // 2. Sauvegarder l'image localement (Simplifié)
-        String fileName = System.currentTimeMillis() + "_" + image.getOriginalFilename();
-        String imageUrl = "/uploads/" + fileName;
-
-        // 3. Retourner le verdict et le lien
+        // 2. Retourner uniquement le verdict
         java.util.Map<String, Object> result = new java.util.HashMap<>();
         result.put("sanitaryVerdict", verdict);
-        result.put("imageUrl", imageUrl);
         return result;
     }
 
