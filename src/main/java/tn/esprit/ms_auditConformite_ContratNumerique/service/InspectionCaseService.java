@@ -26,7 +26,6 @@ public class InspectionCaseService {
 
         // 2. Sauvegarder l'image localement (Simplifié)
         String fileName = System.currentTimeMillis() + "_" + image.getOriginalFilename();
-        // Dans un cas réel, on enregistrerait le fichier sur disque ici.
         // Pour ce projet, on stocke juste le nom simulé.
         String imageUrl = "/uploads/" + fileName;
 
@@ -40,6 +39,21 @@ public class InspectionCaseService {
                 .build();
 
         return create(inspectionCase);
+    }
+
+    public java.util.Map<String, Object> analyseImage(org.springframework.web.multipart.MultipartFile image) {
+        // 1. Simuler l'analyse AI
+        InspectionCase.SanitaryVerdict verdict = aiService.scanImage(image);
+
+        // 2. Sauvegarder l'image localement (Simplifié)
+        String fileName = System.currentTimeMillis() + "_" + image.getOriginalFilename();
+        String imageUrl = "/uploads/" + fileName;
+
+        // 3. Retourner le verdict et le lien
+        java.util.Map<String, Object> result = new java.util.HashMap<>();
+        result.put("sanitaryVerdict", verdict);
+        result.put("imageUrl", imageUrl);
+        return result;
     }
 
     public InspectionCase create(InspectionCase inspectionCase) {
