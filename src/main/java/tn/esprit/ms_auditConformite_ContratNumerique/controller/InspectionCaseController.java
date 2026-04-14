@@ -37,6 +37,12 @@ public class InspectionCaseController {
                 .body(service.scanAndCreate(image, auditorId, deliveryId, description));
     }
 
+    @PostMapping(value = "/analyze", consumes = org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<java.util.Map<String, Object>> analyze(
+            @RequestParam("image") org.springframework.web.multipart.MultipartFile image) {
+        return ResponseEntity.ok(service.analyseImage(image));
+    }
+
     @PostMapping(value = "/analyse", consumes = org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<java.util.Map<String, Object>> analyse(
             @RequestParam("image") org.springframework.web.multipart.MultipartFile image) {
