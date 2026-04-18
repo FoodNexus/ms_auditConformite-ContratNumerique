@@ -57,7 +57,7 @@ public class InspectionCaseService {
                 .equals(saved.getSanitaryVerdict())) {
 
             RecyclingProducts recycling = RecyclingProducts.builder()
-                    .transferDate(LocalDate.now())
+                    .transferDate(LocalDateTime.now())
                     .inspectionCase(saved)
                     .weight(null)
                     .destination(null)
