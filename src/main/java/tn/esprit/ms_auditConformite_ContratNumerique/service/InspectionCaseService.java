@@ -27,7 +27,7 @@ public class InspectionCaseService {
         // 2. Créer l'InspectionCase (Sans image)
         InspectionCase inspectionCase = InspectionCase.builder()
                 .auditorId(auditorId)
-                .delevry_to(delevry_to)
+                .delevryTo(delevry_to)
                 .description(description)
                 .sanitaryVerdict(verdict)
                 .build();
@@ -88,7 +88,7 @@ public class InspectionCaseService {
     }
 
     public List<InspectionCase> getByDelivery(String delevry_to) {
-        return repo.findByDelevry_to(delevry_to);
+        return repo.findByDelevryTo(delevry_to);
     }
 
     public List<InspectionCase> getByStatus(
@@ -107,7 +107,7 @@ public class InspectionCaseService {
         existing.setResolutionStatus(updated.getResolutionStatus());
         existing.setSanitaryVerdict(updated.getSanitaryVerdict());
         existing.setAuditorId(updated.getAuditorId());
-        existing.setDelevry_to(updated.getDelevry_to());
+        existing.setDelevryTo(updated.getDelevryTo());
         return repo.save(existing);
     }
 

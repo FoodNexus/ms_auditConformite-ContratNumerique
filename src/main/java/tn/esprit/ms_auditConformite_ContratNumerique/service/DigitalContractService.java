@@ -18,10 +18,10 @@ public class DigitalContractService {
 
     public DigitalContract create(DigitalContract contract) {
 
-        if (repo.findByDelevry_to(contract.getDelevry_to()).isPresent()) {
+        if (repo.findByDelevryTo(contract.getDelevryTo()).isPresent()) {
             throw new RuntimeException(
                     "Contrat déjà généré pour la livraison: "
-                            + contract.getDelevry_to()
+                            + contract.getDelevryTo()
             );
         }
 
@@ -47,7 +47,7 @@ public class DigitalContractService {
     }
 
     public DigitalContract getByDelivery(String delevry_to) {
-        return repo.findByDelevry_to(delevry_to)
+        return repo.findByDelevryTo(delevry_to)
                 .orElseThrow(() ->
                         new RuntimeException(
                                 "Aucun contrat pour la livraison: " + delevry_to));
@@ -70,7 +70,7 @@ public class DigitalContractService {
         DigitalContract existing = getById(id);
         existing.setDonorName(updated.getDonorName());
         existing.setReceiverName(updated.getReceiverName());
-        existing.setDelevry_to(updated.getDelevry_to());
+        existing.setDelevryTo(updated.getDelevryTo());
         existing.setFiscalDeductionValue(updated.getFiscalDeductionValue());
         existing.setPdfDocumentUrl(updated.getPdfDocumentUrl());
         existing.setStatus(updated.getStatus());

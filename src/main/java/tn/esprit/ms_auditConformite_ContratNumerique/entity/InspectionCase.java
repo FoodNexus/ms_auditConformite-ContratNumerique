@@ -2,6 +2,7 @@ package tn.esprit.ms_auditConformite_ContratNumerique.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDate;
 
 @Entity
@@ -26,7 +27,9 @@ public class InspectionCase {
     @Enumerated(EnumType.STRING)
     private SanitaryVerdict sanitaryVerdict;
 
-    private String delevry_to;
+    @Column(name = "delevry_to")
+    @JsonProperty("delevry_to")
+    private String delevryTo;
 
     private Long auditorId;
 

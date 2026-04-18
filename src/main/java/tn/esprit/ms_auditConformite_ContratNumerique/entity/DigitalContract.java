@@ -2,6 +2,7 @@ package tn.esprit.ms_auditConformite_ContratNumerique.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDate;
 
 @Entity
@@ -21,7 +22,9 @@ public class DigitalContract {
 
     private Double fiscalDeductionValue;
 
-    private String delevry_to;
+    @Column(name = "delevry_to")
+    @JsonProperty("delevry_to")
+    private String delevryTo;
 
     private String donorName;
 
