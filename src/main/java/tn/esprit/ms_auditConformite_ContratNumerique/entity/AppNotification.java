@@ -15,6 +15,8 @@ public class AppNotification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Long userId;
+
     private String message;
 
     private String type; // ALERTE, RAPPEL

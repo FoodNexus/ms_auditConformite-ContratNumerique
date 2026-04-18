@@ -42,7 +42,7 @@ public class AuditScheduler {
 
         for (InspectionCase c : lateCases) {
             String msg = "Alerte: L'inspection #" + c.getCaseId() + " est en cours depuis plus de 5 minutes.";
-            notificationService.createNotification(msg, "ALERTE");
+            notificationService.createNotification(msg, "ALERTE", c.getAuditorId());
         }
     }
 
@@ -52,10 +52,11 @@ public class AuditScheduler {
                 .toList();
 
         for (RecyclingProducts r : incomplete) {
+            Long auditorId = (r.getInspectionCase() != null) ? r.getInspectionCase().getAuditorId() : null;
             String msg = "Rappel: Le produit recyclé pour l'inspection #" 
                 + (r.getInspectionCase() != null ? r.getInspectionCase().getCaseId() : "?") 
                 + " nécessite un poids et une destination.";
-            notificationService.createNotification(msg, "RAPPEL");
+            notificationService.createNotification(msg, "RAPPEL", auditorId);
         }
     }
 }

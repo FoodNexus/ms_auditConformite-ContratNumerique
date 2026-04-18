@@ -5,5 +5,5 @@ import tn.esprit.ms_auditConformite_ContratNumerique.entity.AppNotification;
 import java.util.List;
 
 public interface AppNotificationRepository extends JpaRepository<AppNotification, Long> {
-    List<AppNotification> findAllByOrderByCreatedAtDesc();
+    List<AppNotification> findAllByUserIdOrderByCreatedAtDesc(Long userId);
 }

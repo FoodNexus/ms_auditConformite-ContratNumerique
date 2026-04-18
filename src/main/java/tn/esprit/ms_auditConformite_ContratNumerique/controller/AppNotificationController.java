@@ -17,8 +17,8 @@ public class AppNotificationController {
     private final AppNotificationService service;
 
     @GetMapping
-    public List<AppNotification> getAll() {
-        return service.getAll();
+    public List<AppNotification> getAll(@RequestParam Long userId) {
+        return service.getAll(userId);
     }
 
     @PatchMapping("/{id}/read")
@@ -28,8 +28,8 @@ public class AppNotificationController {
     }
 
     @PatchMapping("/read-all")
-    public ResponseEntity<Void> markAllAsRead() {
-        service.markAllAsRead();
+    public ResponseEntity<Void> markAllAsRead(@RequestParam Long userId) {
+        service.markAllAsRead(userId);
         return ResponseEntity.noContent().build();
     }
 }

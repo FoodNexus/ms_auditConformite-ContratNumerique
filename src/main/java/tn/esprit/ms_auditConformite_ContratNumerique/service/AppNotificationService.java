@@ -16,8 +16,9 @@ public class AppNotificationService {
 
     private final AppNotificationRepository repo;
 
-    public void createNotification(String message, String type) {
+    public void createNotification(String message, String type, Long userId) {
         AppNotification notif = AppNotification.builder()
+                .userId(userId)
                 .message(message)
                 .type(type)
                 .createdAt(LocalDateTime.now())
@@ -26,8 +27,8 @@ public class AppNotificationService {
         repo.save(notif);
     }
 
-    public List<AppNotification> getAll() {
-        return repo.findAllByOrderByCreatedAtDesc();
+    public List<AppNotification> getAll(Long userId) {
+        return repo.findAllByUserIdOrderByCreatedAtDesc(userId);
     }
 
     public void markAsRead(Long id) {
@@ -37,8 +38,8 @@ public class AppNotificationService {
         });
     }
 
-    public void markAllAsRead() {
-        List<AppNotification> unread = repo.findAllByOrderByCreatedAtDesc().stream()
+    public void markAllAsRead(Long userId) {
+        List<AppNotification> unread = repo.findAllByUserIdOrderByCreatedAtDesc(userId).stream()
                 .filter(n -> !n.isRead()).toList();
         unread.forEach(n -> n.setRead(true));
         repo.saveAll(unread);
