@@ -17,8 +17,8 @@ public class AppNotificationController {
     private final AppNotificationService service;
 
     @GetMapping
-    public List<AppNotification> getUnread() {
-        return service.getUnread();
+    public List<AppNotification> getAll() {
+        return service.getAll();
     }
 
     @PatchMapping("/{id}/read")

@@ -26,6 +26,13 @@ public class AuditScheduler {
         checkIncompleteRecycling();
     }
 
+    // Every 2 minutes
+    @Scheduled(cron = "0 */2 * * * *")
+    public void flushNotifications() {
+        notificationService.deleteAllNotifs();
+        System.out.println("--- Notifications Flushed ---");
+    }
+
     private void checkLateInspections() {
         LocalDateTime limit = LocalDateTime.now().minusMinutes(5);
         List<InspectionCase> lateCases = inspectionRepo.findAll().stream()

@@ -26,8 +26,8 @@ public class AppNotificationService {
         repo.save(notif);
     }
 
-    public List<AppNotification> getUnread() {
-        return repo.findByIsReadFalseOrderByCreatedAtDesc();
+    public List<AppNotification> getAll() {
+        return repo.findAllByOrderByCreatedAtDesc();
     }
 
     public void markAsRead(Long id) {
@@ -38,8 +38,13 @@ public class AppNotificationService {
     }
 
     public void markAllAsRead() {
-        List<AppNotification> unread = repo.findByIsReadFalseOrderByCreatedAtDesc();
+        List<AppNotification> unread = repo.findAllByOrderByCreatedAtDesc().stream()
+                .filter(n -> !n.isRead()).toList();
         unread.forEach(n -> n.setRead(true));
         repo.saveAll(unread);
+    }
+
+    public void deleteAllNotifs() {
+        repo.deleteAll();
     }
 }
