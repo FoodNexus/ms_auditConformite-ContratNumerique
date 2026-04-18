@@ -8,7 +8,7 @@ import tn.esprit.ms_auditConformite_ContratNumerique.entity.RecyclingProducts;
 import tn.esprit.ms_auditConformite_ContratNumerique.repository.InspectionCaseRepository;
 import tn.esprit.ms_auditConformite_ContratNumerique.repository.RecyclingProductsRepository;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -46,7 +46,7 @@ public class InspectionCaseService {
     }
 
     public InspectionCase create(InspectionCase inspectionCase) {
-        inspectionCase.setCreationDate(LocalDate.now());
+        inspectionCase.setCreationDate(LocalDateTime.now());
         inspectionCase.setResolutionStatus(
                 InspectionCase.ResolutionStatus.EN_COURS
         );
@@ -129,7 +129,7 @@ public class InspectionCaseService {
 
             if (!alreadyExists) {
                 RecyclingProducts recycling = RecyclingProducts.builder()
-                        .transferDate(LocalDate.now())
+                        .transferDate(LocalDateTime.now())
                         .inspectionCase(existing)
                         .weight(null)
                         .destination(null)

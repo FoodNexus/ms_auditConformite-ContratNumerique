@@ -3,7 +3,7 @@ package tn.esprit.ms_auditConformite_ContratNumerique.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -16,7 +16,7 @@ public class InspectionCase {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long caseId;
 
-    private LocalDate creationDate;
+    private LocalDateTime creationDate;
 
     @Column(length = 1000)
     private String description;
