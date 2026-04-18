@@ -8,7 +8,7 @@ public interface InspectionCaseRepository
         extends JpaRepository<InspectionCase, Long> {
 
     List<InspectionCase> findByAuditorId(Long auditorId);
-    List<InspectionCase> findByDeliveryId(Long deliveryId);
+    List<InspectionCase> findByDelevry_to(String delevry_to);
     List<InspectionCase> findByResolutionStatus(
             InspectionCase.ResolutionStatus status);
     List<InspectionCase> findBySanitaryVerdict(

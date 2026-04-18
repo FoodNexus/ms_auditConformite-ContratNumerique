@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface DigitalContractRepository
         extends JpaRepository<DigitalContract, Long> {
 
-    Optional<DigitalContract> findByDeliveryId(Long deliveryId);
+    Optional<DigitalContract> findByDelevry_to(String delevry_to);
     List<DigitalContract> findByDonorName(String donorName);
     List<DigitalContract> findByReceiverName(String receiverName);
     List<DigitalContract> findByStatus(DigitalContract.ContractStatus status);

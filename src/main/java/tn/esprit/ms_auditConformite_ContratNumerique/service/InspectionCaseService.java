@@ -20,14 +20,14 @@ public class InspectionCaseService {
     private final RecyclingProductsRepository recyclingProductsRepository;
     private final AiInspectionService aiService;
 
-    public InspectionCase scanAndCreate(org.springframework.web.multipart.MultipartFile image, Long auditorId, Long deliveryId, String description) {
+    public InspectionCase scanAndCreate(org.springframework.web.multipart.MultipartFile image, Long auditorId, String delevry_to, String description) {
         // 1. Simuler l'analyse AI
         InspectionCase.SanitaryVerdict verdict = aiService.scanImage(image);
 
         // 2. Créer l'InspectionCase (Sans image)
         InspectionCase inspectionCase = InspectionCase.builder()
                 .auditorId(auditorId)
-                .deliveryId(deliveryId)
+                .delevry_to(delevry_to)
                 .description(description)
                 .sanitaryVerdict(verdict)
                 .build();
@@ -87,8 +87,8 @@ public class InspectionCaseService {
         return repo.findByAuditorId(auditorId);
     }
 
-    public List<InspectionCase> getByDelivery(Long deliveryId) {
-        return repo.findByDeliveryId(deliveryId);
+    public List<InspectionCase> getByDelivery(String delevry_to) {
+        return repo.findByDelevry_to(delevry_to);
     }
 
     public List<InspectionCase> getByStatus(
@@ -107,7 +107,7 @@ public class InspectionCaseService {
         existing.setResolutionStatus(updated.getResolutionStatus());
         existing.setSanitaryVerdict(updated.getSanitaryVerdict());
         existing.setAuditorId(updated.getAuditorId());
-        existing.setDeliveryId(updated.getDeliveryId());
+        existing.setDelevry_to(updated.getDelevry_to());
         return repo.save(existing);
     }
 

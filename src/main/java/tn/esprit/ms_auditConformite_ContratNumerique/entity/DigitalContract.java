@@ -21,7 +21,7 @@ public class DigitalContract {
 
     private Double fiscalDeductionValue;
 
-    private Long deliveryId;
+    private String delevry_to;
 
     private String donorName;
 

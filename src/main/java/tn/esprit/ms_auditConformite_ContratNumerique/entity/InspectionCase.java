@@ -26,7 +26,7 @@ public class InspectionCase {
     @Enumerated(EnumType.STRING)
     private SanitaryVerdict sanitaryVerdict;
 
-    private Long deliveryId;
+    private String delevry_to;
 
     private Long auditorId;
 
