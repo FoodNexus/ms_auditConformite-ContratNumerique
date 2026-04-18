@@ -53,9 +53,9 @@ public class AuditScheduler {
 
         for (RecyclingProducts r : incomplete) {
             Long auditorId = (r.getInspectionCase() != null) ? r.getInspectionCase().getAuditorId() : null;
-            String msg = "Rappel: Le produit recyclé pour l'inspection #" 
-                + (r.getInspectionCase() != null ? r.getInspectionCase().getCaseId() : "?") 
-                + " nécessite un poids et une destination.";
+            String msg = "Rappel: Le produit recyclé pour l'inspection #"
+                    + (r.getInspectionCase() != null ? r.getInspectionCase().getCaseId() : "?")
+                    + " nécessite un poids et une destination.";
             notificationService.createNotification(msg, "RAPPEL", auditorId);
         }
     }
