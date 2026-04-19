@@ -20,14 +20,14 @@ public class AuditScheduler {
     private final AppNotificationService notificationService;
 
     // Run every minute
-    @Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = 180000)
     public void checkAuditTasks() {
         checkLateInspections();
         checkIncompleteRecycling();
     }
 
-    // Every 2 minutes
-    @Scheduled(cron = "0 */2 * * * *")
+    // Every 10 minutes
+    @Scheduled(cron = "0 */10 * * * *")
     public void flushNotifications() {
         notificationService.deleteAllNotifs();
         System.out.println("--- Notifications Flushed ---");
@@ -41,7 +41,7 @@ public class AuditScheduler {
                 .toList();
 
         for (InspectionCase c : lateCases) {
-            String msg = "Alerte: L'inspection #" + c.getCaseId() + " est en cours depuis plus de 5 minutes.";
+            String msg = "Alerte: L'inspection #" + c.getCaseId() + " est en cours.";
             notificationService.createNotification(msg, "ALERTE", c.getAuditorId());
         }
     }
