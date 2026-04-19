@@ -41,18 +41,13 @@ public class AiInspectionService {
             Map<String, Object> result = response.getBody();
 
             if (result != null) {
-                int predictionIndex = (int) result.get("prediction_index");
+                String className = (String) result.get("class_name");
                 double confidence = (double) result.get("confidence");
                 
-                System.out.println("AI Prediction Index: " + predictionIndex + " (Confidence: " + confidence + ")");
+                System.out.println("AI Prediction: " + className + " (Confidence: " + confidence + ")");
                 
-                // --- CUSTOM MAPPING LOGIC ---
-                // Since exact classes are unknown, we provide a placeholder logic.
-                // Normally, you would check if predictionIndex corresponds to a 'rotten' class.
-                // Assuming standard dataset where many indices > some threshold might be rotten
-                // Or user can adjust this matching logic in app.py or here.
-                
-                if (predictionIndex % 2 != 0) { // Example: assume odd indices are rotten (NEEDS ADJUSTMENT)
+                // If the dynamic class name contains "Rotten", we flag for destruction/recycling
+                if (className != null && className.toLowerCase().contains("rotten")) {
                      return InspectionCase.SanitaryVerdict.DESTRUCTION_RECYCLAGE;
                 }
             }
