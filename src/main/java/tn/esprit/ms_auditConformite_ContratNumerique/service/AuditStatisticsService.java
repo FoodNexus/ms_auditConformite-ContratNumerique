@@ -32,8 +32,23 @@ public class AuditStatisticsService {
         stats.put("averageWeight", recyclingRepo.getAverageWeight(auditorId));
 
         // Global counts
-        stats.put("totalInspections", auditorId == null ? inspectionRepo.count() : inspectionRepo.findByAuditorId(auditorId).size());
+        long totalInspections = inspectionRepo.count();
+        long auditorInspections = auditorId == null ? totalInspections : inspectionRepo.findByAuditorId(auditorId).size();
+        stats.put("totalInspections", auditorInspections);
+        stats.put("totalGlobalInspections", totalInspections);
         stats.put("totalRecyclingItems", auditorId == null ? recyclingRepo.count() : recyclingRepo.countByDestination(auditorId).size());
+
+        // --- NEW AUDITOR RELATIVE STATS ---
+        if (auditorId != null) {
+            stats.put("auditorTopDestinations", inspectionRepo.countTopDestinations(auditorId));
+            stats.put("auditorMonthlyResolved", inspectionRepo.countMonthlyResolved(auditorId));
+            stats.put("auditorMonthlyConformity", inspectionRepo.countMonthlyConformity(auditorId));
+            
+            Double auditorWeight = recyclingRepo.sumTotalWeight(auditorId);
+            Double globalWeight = recyclingRepo.sumGlobalTotalWeight();
+            stats.put("auditorWeightContribution", (auditorWeight != null && globalWeight != null && globalWeight > 0) ? (auditorWeight * 100.0 / globalWeight) : 0);
+            stats.put("auditorTotalWeight", auditorWeight != null ? auditorWeight : 0);
+        }
 
         return stats;
     }

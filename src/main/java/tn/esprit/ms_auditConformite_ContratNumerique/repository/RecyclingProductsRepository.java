@@ -14,18 +14,30 @@ public interface RecyclingProductsRepository
     List<RecyclingProducts> findByDestination(
             RecyclingProducts.Destination destination);
 
-    @Query("SELECT r.destination as label, SUM(r.weight) as value FROM RecyclingProducts r WHERE (:auditorId IS NULL OR r.inspectionCase.auditorId = :auditorId) GROUP BY r.destination")
+    @Query("SELECT r.destination as label, SUM(r.weight) as value FROM RecyclingProducts r" +
+            " WHERE (:auditorId IS NULL OR r.inspectionCase.auditorId = :auditorId) GROUP BY r.destination")
     List<Map<String, Object>> sumWeightByDestination(@Param("auditorId") Long auditorId);
 
-    @Query("SELECT FUNCTION('MONTH', r.transferDate) as month, SUM(r.weight) as value FROM RecyclingProducts r WHERE (:auditorId IS NULL OR r.inspectionCase.auditorId = :auditorId) GROUP BY FUNCTION('MONTH', r.transferDate) ORDER BY 1")
+    @Query("SELECT FUNCTION('MONTH', r.transferDate) as month, SUM(r.weight) as value FROM RecyclingProducts r" +
+            " WHERE (:auditorId IS NULL OR r.inspectionCase.auditorId = :auditorId) GROUP BY FUNCTION('MONTH', r.transferDate) ORDER BY 1")
     List<Map<String, Object>> sumWeightByMonth(@Param("auditorId") Long auditorId);
 
-    @Query("SELECT r.inspectionCase.sanitaryVerdict as label, SUM(r.weight) as value FROM RecyclingProducts r WHERE (:auditorId IS NULL OR r.inspectionCase.auditorId = :auditorId) GROUP BY r.inspectionCase.sanitaryVerdict")
+    @Query("SELECT r.inspectionCase.sanitaryVerdict as label, SUM(r.weight) as value FROM RecyclingProducts r" +
+            " WHERE (:auditorId IS NULL OR r.inspectionCase.auditorId = :auditorId) GROUP BY r.inspectionCase.sanitaryVerdict")
     List<Map<String, Object>> sumWeightByVerdict(@Param("auditorId") Long auditorId);
 
-    @Query("SELECT r.destination as label, COUNT(r) as value FROM RecyclingProducts r WHERE (:auditorId IS NULL OR r.inspectionCase.auditorId = :auditorId) GROUP BY r.destination")
+    @Query("SELECT r.destination as label, COUNT(r) as value FROM RecyclingProducts r" +
+            " WHERE (:auditorId IS NULL OR r.inspectionCase.auditorId = :auditorId) GROUP BY r.destination")
     List<Map<String, Object>> countByDestination(@Param("auditorId") Long auditorId);
 
-    @Query("SELECT AVG(r.weight) FROM RecyclingProducts r WHERE (:auditorId IS NULL OR r.inspectionCase.auditorId = :auditorId)")
+    @Query("SELECT AVG(r.weight) FROM RecyclingProducts r" +
+            " WHERE (:auditorId IS NULL OR r.inspectionCase.auditorId = :auditorId)")
     Double getAverageWeight(@Param("auditorId") Long auditorId);
+
+    @Query("SELECT SUM(r.weight) FROM RecyclingProducts r " +
+            "WHERE (:auditorId IS NULL OR r.inspectionCase.auditorId = :auditorId)")
+    Double sumTotalWeight(@Param("auditorId") Long auditorId);
+
+    @Query("SELECT SUM(r.weight) FROM RecyclingProducts r")
+    Double sumGlobalTotalWeight();
 }
