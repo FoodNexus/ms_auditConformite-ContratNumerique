@@ -7,8 +7,10 @@ Ce service gère l'inspection des produits alimentaires, détermine leur verdict
 ✨ Fonctionnalités Principales
 
 🔍 Inspection Intelligente (AI-Powered) : Analyse automatisée d'images de produits alimentaires à l'aide d'un modele du deep learning pour générer un verdict sanitaire (PROPRE_A_LA_CONSOMMATION, DESTRUCTION_RECYCLAGE).
+
 ♻️ Gestion du Recyclage : Si un produit est jugé impropre, le service automatise la création d'un log de recyclage (Destinations: COMPOST ou AGRICULTEUR).
 📄 Contrats Numériques : Génération, suivi, et sécurisation de contrats numériques entre les donneurs (restaurants/supermarchés) et les récepteurs (associations/banques alimentaires).
+
 📊 Statistiques & Tableaux de Bord : Calculs avancés (JPQL) pour fournir des KPIs complets aux auditeurs (répartition des verdicts, volumes recyclés, taux de conversion, etc.).
 
 🔔 Notifications Intégrées : Service de suivi d'activité et de notification in-app pour informer les utilisateurs des changements d'états.
@@ -75,7 +77,9 @@ PATCH /{id}/verdict : Mettre à jour manuellement le verdict sanitaire.
 POST / : Générer un nouveau contrat de don. (Nécessite le rôle ADMIN)
 GET / : Liste complète des contrats.
 PATCH /{id}/status : Mettre à jour l'état d'un contrat (GENERE, ENVOYE, ARCHIVE).
+
 ♻️ Recyclage (/api/recycling-products)
 GET /inspection-case/{caseId} : Obtenir les données de recyclage associées à une inspection rejetée.
+
 📊 Statistiques (/api/audit/statistics)
 GET /?auditorId={id} : Récupérer toutes les métriques et KPIs d'un auditeur ou de la plateforme globale.
