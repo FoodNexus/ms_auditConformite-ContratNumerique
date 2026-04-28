@@ -1,9 +1,11 @@
 📝 Description
+
 Le microservice Audit Conformité & Contrat Numérique est un composant central de la plateforme FoodNexus. Il a pour but de garantir la qualité et la traçabilité des produits alimentaires à travers un processus d'audit rigoureux assisté par l'Intelligence Artificielle.
 
 Ce service gère l'inspection des produits alimentaires (via l'analyse d'images par l'IA Gemini), détermine leur verdict sanitaire, gère leur destination (recyclage ou consommation), et automatise la génération de contrats numériques pour les dons alimentaires.
 
 ✨ Fonctionnalités Principales
+
 🔍 Inspection Intelligente (AI-Powered) : Analyse automatisée d'images de produits alimentaires à l'aide de Google Gemini AI pour générer un verdict sanitaire (PROPRE_A_LA_CONSOMMATION, DESTRUCTION_RECYCLAGE).
 ♻️ Gestion du Recyclage : Si un produit est jugé impropre, le service automatise la création d'un log de recyclage (Destinations: COMPOST ou AGRICULTEUR).
 📄 Contrats Numériques : Génération, suivi, et sécurisation de contrats numériques entre les donneurs (restaurants/supermarchés) et les récepteurs (associations/banques alimentaires).
