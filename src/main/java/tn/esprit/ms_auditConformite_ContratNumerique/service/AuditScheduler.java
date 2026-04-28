@@ -19,7 +19,6 @@ public class AuditScheduler {
     private final RecyclingProductsRepository recyclingRepo;
     private final AppNotificationService notificationService;
 
-    // Run every minute
     @Scheduled(fixedRate = 180000)
     public void checkAuditTasks() {
         checkLateInspections();
@@ -30,7 +29,7 @@ public class AuditScheduler {
     @Scheduled(cron = "0 */10 * * * *")
     public void flushNotifications() {
         notificationService.deleteAllNotifs();
-        System.out.println("--- Notifications Flushed ---");
+        System.out.println("Notifications Flushed ");
     }
 
     private void checkLateInspections() {

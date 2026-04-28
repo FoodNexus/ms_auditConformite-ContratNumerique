@@ -46,7 +46,6 @@ public class AiInspectionService {
                 
                 System.out.println("AI Prediction: " + className + " (Confidence: " + confidence + ")");
                 
-                // If the dynamic class name contains "Rotten", we flag for destruction/recycling
                 if (className != null && className.toLowerCase().contains("rotten")) {
                      return InspectionCase.SanitaryVerdict.DESTRUCTION_RECYCLAGE;
                 }

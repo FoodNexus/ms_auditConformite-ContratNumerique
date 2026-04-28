@@ -38,7 +38,6 @@ public class AuditStatisticsService {
         stats.put("totalGlobalInspections", totalInspections);
         stats.put("totalRecyclingItems", auditorId == null ? recyclingRepo.count() : recyclingRepo.countByDestination(auditorId).size());
 
-        // --- NEW AUDITOR RELATIVE STATS ---
         if (auditorId != null) {
             stats.put("auditorTopDestinations", inspectionRepo.countTopDestinations(auditorId));
             stats.put("auditorMonthlyResolved", inspectionRepo.countMonthlyResolved(auditorId));
