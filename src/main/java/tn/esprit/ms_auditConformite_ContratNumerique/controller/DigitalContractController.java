@@ -36,10 +36,10 @@ public class DigitalContractController {
         return ResponseEntity.ok(service.getById(id));
     }
 
-    @GetMapping("/delivery/{deliveryId}")
+    @GetMapping("/delivery/{delevry_to}")
     public ResponseEntity<DigitalContract> getByDelivery(
-            @PathVariable Long deliveryId) {
-        return ResponseEntity.ok(service.getByDelivery(deliveryId));
+            @PathVariable String delevry_to) {
+        return ResponseEntity.ok(service.getByDelivery(delevry_to));
     }
 
     @GetMapping("/donor/{donorName}")

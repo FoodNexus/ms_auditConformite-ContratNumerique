@@ -30,11 +30,11 @@ public class InspectionCaseController {
     public ResponseEntity<InspectionCase> scan(
             @RequestParam("image") org.springframework.web.multipart.MultipartFile image,
             @RequestParam("auditorId") Long auditorId,
-            @RequestParam("deliveryId") Long deliveryId,
+            @RequestParam("delevry_to") String delevry_to,
             @RequestParam(value = "description", required = false) String description) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(service.scanAndCreate(image, auditorId, deliveryId, description));
+                .body(service.scanAndCreate(image, auditorId, delevry_to, description));
     }
 
     @PostMapping(value = "/analyze", consumes = org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -64,9 +64,9 @@ public class InspectionCaseController {
         return service.getByAuditor(auditorId);
     }
 
-    @GetMapping("/delivery/{deliveryId}")
-    public List<InspectionCase> getByDelivery(@PathVariable Long deliveryId) {
-        return service.getByDelivery(deliveryId);
+    @GetMapping("/delivery/{delevry_to}")
+    public List<InspectionCase> getByDelivery(@PathVariable String delevry_to) {
+        return service.getByDelivery(delevry_to);
     }
 
     @GetMapping("/status/{status}")

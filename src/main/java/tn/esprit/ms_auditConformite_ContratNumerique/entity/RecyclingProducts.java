@@ -2,7 +2,7 @@ package tn.esprit.ms_auditConformite_ContratNumerique.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -15,7 +15,7 @@ public class RecyclingProducts {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long logId;
 
-    private LocalDate transferDate;
+    private LocalDateTime transferDate;
 
     @Column(nullable = true)
     private Double weight;

@@ -8,7 +8,7 @@ import tn.esprit.ms_auditConformite_ContratNumerique.entity.RecyclingProducts;
 import tn.esprit.ms_auditConformite_ContratNumerique.repository.InspectionCaseRepository;
 import tn.esprit.ms_auditConformite_ContratNumerique.repository.RecyclingProductsRepository;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -20,14 +20,14 @@ public class InspectionCaseService {
     private final RecyclingProductsRepository recyclingProductsRepository;
     private final AiInspectionService aiService;
 
-    public InspectionCase scanAndCreate(org.springframework.web.multipart.MultipartFile image, Long auditorId, Long deliveryId, String description) {
+    public InspectionCase scanAndCreate(org.springframework.web.multipart.MultipartFile image, Long auditorId, String delevry_to, String description) {
         // 1. Simuler l'analyse AI
         InspectionCase.SanitaryVerdict verdict = aiService.scanImage(image);
 
         // 2. Créer l'InspectionCase (Sans image)
         InspectionCase inspectionCase = InspectionCase.builder()
                 .auditorId(auditorId)
-                .deliveryId(deliveryId)
+                .delevryTo(delevry_to)
                 .description(description)
                 .sanitaryVerdict(verdict)
                 .build();
@@ -46,7 +46,7 @@ public class InspectionCaseService {
     }
 
     public InspectionCase create(InspectionCase inspectionCase) {
-        inspectionCase.setCreationDate(LocalDate.now());
+        inspectionCase.setCreationDate(LocalDateTime.now());
         inspectionCase.setResolutionStatus(
                 InspectionCase.ResolutionStatus.EN_COURS
         );
@@ -57,7 +57,7 @@ public class InspectionCaseService {
                 .equals(saved.getSanitaryVerdict())) {
 
             RecyclingProducts recycling = RecyclingProducts.builder()
-                    .transferDate(LocalDate.now())
+                    .transferDate(LocalDateTime.now())
                     .inspectionCase(saved)
                     .weight(null)
                     .destination(null)
@@ -87,8 +87,8 @@ public class InspectionCaseService {
         return repo.findByAuditorId(auditorId);
     }
 
-    public List<InspectionCase> getByDelivery(Long deliveryId) {
-        return repo.findByDeliveryId(deliveryId);
+    public List<InspectionCase> getByDelivery(String delevry_to) {
+        return repo.findByDelevryTo(delevry_to);
     }
 
     public List<InspectionCase> getByStatus(
@@ -107,7 +107,7 @@ public class InspectionCaseService {
         existing.setResolutionStatus(updated.getResolutionStatus());
         existing.setSanitaryVerdict(updated.getSanitaryVerdict());
         existing.setAuditorId(updated.getAuditorId());
-        existing.setDeliveryId(updated.getDeliveryId());
+        existing.setDelevryTo(updated.getDelevryTo());
         return repo.save(existing);
     }
 
@@ -129,7 +129,7 @@ public class InspectionCaseService {
 
             if (!alreadyExists) {
                 RecyclingProducts recycling = RecyclingProducts.builder()
-                        .transferDate(LocalDate.now())
+                        .transferDate(LocalDateTime.now())
                         .inspectionCase(existing)
                         .weight(null)
                         .destination(null)

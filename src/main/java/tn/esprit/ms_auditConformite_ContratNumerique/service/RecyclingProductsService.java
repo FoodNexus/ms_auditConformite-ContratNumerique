@@ -7,7 +7,7 @@ import tn.esprit.ms_auditConformite_ContratNumerique.entity.RecyclingProducts;
 import tn.esprit.ms_auditConformite_ContratNumerique.repository.InspectionCaseRepository;
 import tn.esprit.ms_auditConformite_ContratNumerique.repository.RecyclingProductsRepository;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -32,7 +32,7 @@ public class RecyclingProductsService {
             );
         }
 
-        product.setTransferDate(LocalDate.now());
+        product.setTransferDate(LocalDateTime.now());
         product.setInspectionCase(inspectionCase);
         return repo.save(product);
     }
