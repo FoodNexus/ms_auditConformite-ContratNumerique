@@ -8,7 +8,9 @@ Ce service gère l'inspection des produits alimentaires, détermine leur verdict
 
 🔍 Inspection Intelligente (AI-Powered) : Analyse automatisée d'images de produits alimentaires à l'aide d'un modele du deep learning pour générer un verdict sanitaire (PROPRE_A_LA_CONSOMMATION, DESTRUCTION_RECYCLAGE).
 
-♻️ Gestion du Recyclage : Si un produit est jugé impropre, le service automatise la création d'un log de recyclage (Destinations: COMPOST ou AGRICULTEUR). 📄 Contrats Numériques : Génération, suivi, et sécurisation de contrats numériques entre les donneurs (restaurants/supermarchés) et les récepteurs (associations/banques alimentaires).
+♻️ Gestion du Recyclage : Si un produit est jugé impropre, le service automatise la création d'un log de recyclage (Destinations: COMPOST ou AGRICULTEUR).
+
+📄 Contrats Numériques : Génération, suivi, et sécurisation de contrats numériques entre les donneurs (restaurants/supermarchés) et les récepteurs (associations/banques alimentaires).
 
 📊 Statistiques & Tableaux de Bord : Calculs avancés (JPQL) pour fournir des KPIs complets aux auditeurs (répartition des verdicts, volumes recyclés, taux de conversion, etc.).
 
